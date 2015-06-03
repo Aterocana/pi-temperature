@@ -6,6 +6,8 @@
 # modify it under the terms of the GNU General Public License
 # version 2 as published by the Free Software Foundation.
 
+output_file="/home/pi/data.json"
+
 now=$(date)
 
 if [ -f "/proc/uptime" ]; then
@@ -22,9 +24,11 @@ fi
 
 # temp=$(/opt/vc/bin/vcgencmd measure_temp)
 
-if [ -f "$(pwd)/data.json" ]; then
-	element="{\"date\":\""$(date)"\",\t\"temp\":\""$temp"\",\t\"uptime\":\""$uptime"\"}"
-	sed -i "s/]/,\n$element]/" data.json
+element="{\"date\":\""$(date)"\",\t\"temp\":\""$temp"\",\t\"uptime\":\""$uptime"\"}"
+
+if [ -f $output_file ]; then
+	sed -i "s/]/,\n$element]/" $output_file
 else
-	echo -e "[{\"date\":\""$(date)"\",\t\"temp\":\""$temp"\",\t\"uptime\":\""$uptime"\"}]" > ./data.json
+	touch $output_file
+	echo -e "[{\"date\":\""$(date)"\",\t\"temp\":\""$temp"\",\t\"uptime\":\""$uptime"\"}]" > $output_file
 fi
