@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyleft (C) 2015 Maurizio Dominici <dominicimaurizio@gmail.com> 
+# Copyleft (C) 2015 Maurizio Dominici <dominicimaurizio@gmail.com>
 # www.digitalsyncretism.com
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -20,10 +20,11 @@ else
 	uptime=""
 fi
 
-temp=$(/opt/vc/bin/vcgencmd measure_temp)
+# temp=$(/opt/vc/bin/vcgencmd measure_temp)
 
-echo $now
-echo $uptime
-echo $temp
-
-echo -e "{\"date\":\""$(date)"\",\t\"temp\":\""$temp"\",\t\"uptime\":\""$uptime"\"}"
+if [ -f "$(pwd)/data.json" ]; then
+	element="{\"date\":\""$(date)"\",\t\"temp\":\""$temp"\",\t\"uptime\":\""$uptime"\"}"
+	sed -i "s/]/,\n$element]/" data.json
+else
+	echo -e "[{\"date\":\""$(date)"\",\t\"temp\":\""$temp"\",\t\"uptime\":\""$uptime"\"}]" > ./data.json
+fi
