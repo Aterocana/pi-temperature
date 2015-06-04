@@ -22,7 +22,7 @@ else
 	uptime=""
 fi
 
-# temp=$(/opt/vc/bin/vcgencmd measure_temp)
+temp=$(/opt/vc/bin/vcgencmd measure_temp)
 
 element="{\"date\":\""$(date)"\",\t\"temp\":\""$temp"\",\t\"uptime\":\""$uptime"\"}"
 
